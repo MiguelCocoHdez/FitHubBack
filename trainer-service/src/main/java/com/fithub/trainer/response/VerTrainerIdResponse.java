@@ -1,6 +1,10 @@
-package com.fithub.trainer.dto;
+package com.fithub.trainer.response;
 
 import java.time.LocalDate;
+import java.util.List;
+import java.util.Map;
+
+import com.fithub.trainer.dto.ClientDTO;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,7 +19,7 @@ import lombok.Setter;
 @NoArgsConstructor
 
 @Builder
-public class ClientDTO {
+public class VerTrainerIdResponse {
 
 	private Long id;
 	private String nombre;
@@ -25,5 +29,6 @@ public class ClientDTO {
 	private String bio;
 	private String foto;
 	private LocalDate fechacreacion;
-	private String genero;
+	private Map<String, String> redesSociales;
+	private List<ClientDTO> clientes;
 }

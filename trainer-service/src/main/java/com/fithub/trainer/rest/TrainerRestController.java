@@ -1,14 +1,18 @@
 package com.fithub.trainer.rest;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fithub.trainer.dto.TrainerDTO;
+import com.fithub.trainer.response.VerTrainerIdResponse;
 import com.fithub.trainer.service.TrainerService;
 
 
@@ -28,4 +32,12 @@ public class TrainerRestController {
 		return ResponseEntity.ok("Registrado correctamente");
 	}
 	
+	@GetMapping("/verTrainer")
+	VerTrainerIdResponse verTrainer(@RequestParam Long trainerId, Authentication auth) {
+		String email = (String) auth.getPrincipal();
+		
+		ts.validarAccesoTrainer(trainerId, email);
+		
+		return ts.verClientesTrainer(trainerId);
+	}
 }

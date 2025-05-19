@@ -25,3 +25,7 @@ eureka:
 jwt:
   secret: ${JWT_PASSWORD}
   expiration: 86400000 # 1 día en ms
+
+logging:
+  level:
+    org.springframework.security: DEBUG
