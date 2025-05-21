@@ -79,4 +79,9 @@ public class TrainerServiceImpl implements TrainerService {
 		return TrainerCompletoDTO.parse(tr.verTrainerEmail(email));
 	}
 
+	@Override
+	public void cambiarAPremiumTrainer(String email) {		
+		tr.cambiarAPremiumTrainer(email);
+	}
+
 }

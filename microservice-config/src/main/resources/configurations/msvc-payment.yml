@@ -16,5 +16,6 @@ jwt:
 
 stripe:
   secret-key: ${SECRET_KEY}
+  webhook-key: ${WEBHOOK_KEY}
   successUrl: http://localhost:4200/suscripcion/success #Cambiar dependiendo la direccion del front
   cancelUrl: http://localhost:4200/suscripcion/cancel #Cambiar dependiendo la direccion del front

@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -42,11 +43,19 @@ public class TrainerRestController {
 		return ts.verClientesTrainer(trainerId);
 	}
 	
-	//Endpoint consumido por payment service
+	//ENDPOINT CONSUMIDO POR PAYMENT SERVICE
 	@GetMapping("/verTrainerEmail")
 	TrainerCompletoDTO verTrainerEmail(Authentication auth) {
 		String email = (String) auth.getPrincipal();
 		
 		return ts.verTrainerEmail(email);
+	}
+	
+	//ENDPOINT CONSUMIDO POR PAYMENT SERVICE
+	@PatchMapping("/cambiarAPremiumTrainer")
+	void cambiarAPremiumTrainer(Authentication auth) {
+		String email = (String) auth.getPrincipal();
+		
+		ts.cambiarAPremiumTrainer(email);
 	}
 }

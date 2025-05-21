@@ -14,4 +14,6 @@ public interface TrainerService {
 	void validarAccesoTrainer(Long trainerId, String email);
 	
 	TrainerCompletoDTO verTrainerEmail(String email);
+	
+	void cambiarAPremiumTrainer(String email);
 }
