@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fithub.trainer.dto.TrainerCompletoDTO;
 import com.fithub.trainer.dto.TrainerDTO;
 import com.fithub.trainer.response.VerTrainerIdResponse;
 import com.fithub.trainer.service.TrainerService;
@@ -39,5 +40,13 @@ public class TrainerRestController {
 		ts.validarAccesoTrainer(trainerId, email);
 		
 		return ts.verClientesTrainer(trainerId);
+	}
+	
+	//Endpoint consumido por payment service
+	@GetMapping("/verTrainerEmail")
+	TrainerCompletoDTO verTrainerEmail(Authentication auth) {
+		String email = (String) auth.getPrincipal();
+		
+		return ts.verTrainerEmail(email);
 	}
 }

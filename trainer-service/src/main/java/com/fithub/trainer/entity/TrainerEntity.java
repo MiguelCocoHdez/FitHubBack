@@ -10,6 +10,8 @@ import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -55,6 +57,9 @@ public class TrainerEntity {
 	@Column
 	private LocalDate fechacreacion;
 	
+	@Enumerated(EnumType.STRING)
+	private Plan plan;
+	
 	@ElementCollection
     @CollectionTable(name = "redes")
     @MapKeyColumn(name = "plataforma")
@@ -73,7 +78,8 @@ public class TrainerEntity {
 	    trainer.setTfno(t.getTfno());
 	    trainer.setBio(t.getBio());
 	    trainer.setRedesSociales(t.getRedesSociales());
-
+	    trainer.setPlan(t.getPlan());
+	    
 	    trainer.setClientesIds(List.of());         
 	    trainer.setFoto(null);                     
 

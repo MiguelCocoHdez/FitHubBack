@@ -2,6 +2,8 @@ package com.fithub.trainer.dto;
 
 import java.util.Map;
 
+import com.fithub.trainer.entity.Plan;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,4 +22,5 @@ public class TrainerDTO {
 	private int tfno;
 	private String bio;
 	private Map<String, String> redesSociales;
+	private Plan plan;
 }

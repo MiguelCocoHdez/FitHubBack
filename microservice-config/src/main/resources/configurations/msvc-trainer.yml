@@ -2,7 +2,7 @@ server:
   port: 8082
   
 spring:
-  aplication:
+  application:
     name: msvc-trainer
   datasource:
     url: ${DB_URL}

@@ -1,0 +1,20 @@
+server:
+  port: 8084
+
+spring:
+  application:
+    name: msvc-payment
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+
+jwt:
+  secret: ${JWT_PASSWORD}
+  expiration: 86400000
+
+stripe:
+  secret-key: ${SECRET_KEY}
+  successUrl: http://localhost:4200/suscripcion/success #Cambiar dependiendo la direccion del front
+  cancelUrl: http://localhost:4200/suscripcion/cancel #Cambiar dependiendo la direccion del front

@@ -1,4 +1,4 @@
-package com.fithub.trainer.security;
+package com.fithub.payment.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,7 +11,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import com.fithub.trainer.jwt.JwtAuthFilter;
+import com.fithub.payment.jwt.JwtAuthFilter;
 
 import lombok.RequiredArgsConstructor;
 
@@ -27,7 +27,7 @@ public class SecurityConfig {
         http
         	.csrf(AbstractHttpConfigurer::disable)
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/register", "/verTrainer", "/verTrainerEmail").authenticated()
+                .requestMatchers("/suscripcionPremium").authenticated()
                 .anyRequest().permitAll()
             )
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

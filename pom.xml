@@ -23,6 +23,7 @@
 	<module>microservice-auth</module>
 	<module>trainer-service</module>
 	<module>microservice-client</module>
+	<module>microservice-payment</module>
   </modules>
 
   <properties>

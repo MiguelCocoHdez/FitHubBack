@@ -12,4 +12,7 @@ public interface TrainerRepository extends JpaRepository<TrainerEntity, Long> {
 
 	@Query(value = "SELECT * FROM trainers WHERE id = :id", nativeQuery = true)
 	TrainerEntity verTrainerId(@Param("id") Long id);
+	
+	@Query(value = "SELECT * FROM trainers WHERE email = :email", nativeQuery = true)
+	TrainerEntity verTrainerEmail(@Param("email") String email);
 }

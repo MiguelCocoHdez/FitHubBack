@@ -2,7 +2,7 @@ server:
   port: 8083
   
 spring:
-  aplication:
+  application:
     name: msvc-service
   datasource:
     url: ${DB_URL}

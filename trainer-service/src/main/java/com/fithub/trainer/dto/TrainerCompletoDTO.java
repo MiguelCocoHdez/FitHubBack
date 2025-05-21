@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
+import com.fithub.trainer.entity.Plan;
 import com.fithub.trainer.entity.TrainerEntity;
 
 import lombok.AllArgsConstructor;
@@ -27,6 +28,7 @@ public class TrainerCompletoDTO {
 	private String bio;
 	private String foto;
 	private LocalDate fechacreacion;
+	private Plan plan;
 	private Map<String, String> redesSociales;
 	private List<Long> clientesIds;
 	
@@ -41,6 +43,7 @@ public class TrainerCompletoDTO {
 		tN.setBio(t.getBio());
 		tN.setFoto(t.getFoto());
 		tN.setFechacreacion(t.getFechacreacion());
+		tN.setPlan(t.getPlan());
 		tN.setRedesSociales(t.getRedesSociales());
 		tN.setClientesIds(t.getClientesIds());
 		
