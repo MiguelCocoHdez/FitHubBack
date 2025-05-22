@@ -12,6 +12,7 @@ public class FeignClientConfig implements RequestInterceptor {	//Esta clase sirv
 	@Override
     public void apply(RequestTemplate template) {
         String token = SecurityContextHolder.getContext().getAuthentication().getCredentials().toString();
+        
         template.header("Authorization", "Bearer " + token);
     }
 }

@@ -75,9 +75,9 @@ public class PaymentServiceImpl implements PaymentService {
 		                .getObject()
 		                .orElseThrow(() -> new RuntimeException("No se pudo obtener sesión de Stripe"));
 				
-				String email = session.getClientReferenceId();
+				//String email = session.getClientReferenceId();
 				
-				//ptc.cambiarPlanAPremium(email); IMPLEMENTAR ESTO PARA PONERLE EL PLAN PREMIUM A EL ENTRENADOR
+				//ptc.cambiarPlanAPremium(email); IMPLEMENTAR ESTO PARA PONERLE EL PLAN PREMIUM A EL ENTRENADOR | AQUI SI HARIA FALTA PASAR EL EMAIL | EL ENDPOINT EN TRAINER NO SE PODRIA AUTENTICAR CON JWT
 			}
 		} catch(StripeException e) {
 			throw new RuntimeException("Error de Stripe: " + e.getMessage(), e);
