@@ -17,13 +17,13 @@
   <packaging>pom</packaging>
   
   <modules>
-	<module>microservice-gateway</module>
 	<module>microservice-eureka</module>
 	<module>microservice-config</module>
 	<module>microservice-auth</module>
 	<module>trainer-service</module>
 	<module>microservice-client</module>
 	<module>microservice-payment</module>
+	<module>microservice-gateway</module>
   </modules>
 
   <properties>

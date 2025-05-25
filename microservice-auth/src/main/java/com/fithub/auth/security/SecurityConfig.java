@@ -1,7 +1,9 @@
 package com.fithub.auth.security;
 
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -27,9 +29,10 @@ public class SecurityConfig {
 
 	@Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-		http.cors(Customizer.withDefaults())
+		http
 			.csrf(AbstractHttpConfigurer::disable)
 			.authorizeHttpRequests(auth -> auth.requestMatchers("fithub/auth/register", "fithub/auth/login").permitAll()
+			.requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
 			.anyRequest().authenticated())
 			.httpBasic(Customizer.withDefaults())
 			.exceptionHandling(excepcion -> excepcion.authenticationEntryPoint(jwtEntryPoint()))
@@ -47,4 +50,5 @@ public class SecurityConfig {
     PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+	
 }

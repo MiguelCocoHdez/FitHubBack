@@ -1,5 +1,8 @@
 package com.fithub.auth.rest;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -15,20 +18,30 @@ import com.fithub.auth.dto.RegistroDTO;
 import com.fithub.auth.service.AuthService;
 
 @RestController
-@RequestMapping("fithub/auth")
+@RequestMapping("/fithub/auth")
 public class AuthRestController {
 
 	@Autowired
 	AuthService as;
 	
 	@PostMapping("/register")
-	ResponseEntity<String> register(@RequestBody RegistroDTO reg) {
-		return ResponseEntity.ok(as.registro(reg));
+	ResponseEntity<Map<String, String>> register(@RequestBody RegistroDTO reg) {
+		String token = as.registro(reg);
+		
+		Map<String, String> respuesta = new HashMap<>();
+		respuesta.put("token", token);
+		
+		return ResponseEntity.ok(respuesta);
 	}
 	
 	@PostMapping("/login")
-	ResponseEntity<String> login(@RequestBody LoginDTO log) {
-		return ResponseEntity.ok(as.login(log));
+	ResponseEntity<Map<String, String>> login(@RequestBody LoginDTO log) {
+		String token = as.login(log);
+		
+		Map<String, String> respuesta = new HashMap<>();
+		respuesta.put("token", token);
+		
+		return ResponseEntity.ok(respuesta);
 	}
 	
 	@GetMapping("/perfil")

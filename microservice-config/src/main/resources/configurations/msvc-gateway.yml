@@ -1,0 +1,39 @@
+server:
+  port: 8080
+
+logging:
+  level:
+    org.springframework.cloud.gateway: DEBUG
+
+spring:
+  application:
+    name: msvc-gateway
+
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      globalcors:
+        cors-configurations: 
+          '[/**]':
+            allowedOrigins:
+              - "http://localhost:4200"
+            allowedMethods: ["GET", "POST", "PUT", "DELETE", "OPTIONS","PATCH"]
+            allowedHeaders: ["*"]
+
+      routes:
+        - id: MSVC-AUTH
+          uri: lb://MSVC-AUTH
+          predicates:
+            - Path=/fithub/auth/**
+
+        - id: MSVC-TRAINER
+          uri: lb://MSVC-TRAINER
+          predicates:
+            - Path=/fithub/trainer/**
+
+        - id: MSVC-PAYMENT
+          uri: lb://MSVC-PAYMENT
+          predicates:
+            - Path=/fithub/payment/**
