@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.fithub.trainer.dto.ClientDTO;
+import com.fithub.trainer.entity.Plan;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -29,6 +30,7 @@ public class VerTrainerIdResponse {
 	private String bio;
 	private String foto;
 	private LocalDate fechacreacion;
+	private Plan plan;
 	private Map<String, String> redesSociales;
 	private List<ClientDTO> clientes;
 }

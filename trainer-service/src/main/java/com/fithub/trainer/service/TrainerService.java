@@ -9,9 +9,9 @@ public interface TrainerService {
 
 	void crearTrainer(TrainerDTO trainer, String email);
 	
-	VerTrainerIdResponse verClientesTrainer(Long trainerId);
+	VerTrainerIdResponse verClientesTrainer(String email);
 	
-	void validarAccesoTrainer(Long trainerId, String email);
+	void validarAccesoTrainer(String email);
 	
 	TrainerCompletoDTO verTrainerEmail(String email);
 	

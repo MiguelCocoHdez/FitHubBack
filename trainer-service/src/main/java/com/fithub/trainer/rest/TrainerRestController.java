@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fithub.trainer.dto.TrainerCompletoDTO;
@@ -35,12 +34,12 @@ public class TrainerRestController {
 	}
 	
 	@GetMapping("/verTrainer")
-	VerTrainerIdResponse verTrainer(@RequestParam Long trainerId, Authentication auth) {
+	VerTrainerIdResponse verTrainer(Authentication auth) {
 		String email = (String) auth.getPrincipal();
 		
-		ts.validarAccesoTrainer(trainerId, email);
+		ts.validarAccesoTrainer(email);
 		
-		return ts.verClientesTrainer(trainerId);
+		return ts.verClientesTrainer(email);
 	}
 	
 	//ENDPOINT CONSUMIDO POR PAYMENT SERVICE

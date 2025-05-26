@@ -3,7 +3,7 @@ server:
   
 spring:
   application:
-    name: msvc-service
+    name: msvc-client
   datasource:
     url: ${DB_URL}
     username: ${DB_USERNAME}

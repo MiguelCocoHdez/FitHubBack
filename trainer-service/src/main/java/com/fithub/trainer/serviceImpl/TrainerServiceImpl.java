@@ -37,8 +37,8 @@ public class TrainerServiceImpl implements TrainerService {
 	}
 
 	@Override
-	public VerTrainerIdResponse verClientesTrainer(Long trainerId) {
-		TrainerCompletoDTO trainer = TrainerCompletoDTO.parse(tr.verTrainerId(trainerId));
+	public VerTrainerIdResponse verClientesTrainer(String email) {
+		TrainerCompletoDTO trainer = TrainerCompletoDTO.parse(tr.verTrainerEmail(email));
 		
 		if(trainer == null) {
 			return new VerTrainerIdResponse();
@@ -56,14 +56,15 @@ public class TrainerServiceImpl implements TrainerService {
 				.bio(trainer.getBio())
 				.foto(trainer.getFoto())
 				.fechacreacion(trainer.getFechacreacion())
+				.plan(trainer.getPlan())
 				.redesSociales(trainer.getRedesSociales())
 				.clientes(clientesTrainer)
 				.build();		
 	}
 
 	@Override
-	public void validarAccesoTrainer(Long trainerId, String email) {
-		TrainerCompletoDTO trainer = TrainerCompletoDTO.parse(tr.verTrainerId(trainerId));
+	public void validarAccesoTrainer(String email) {
+		TrainerCompletoDTO trainer = TrainerCompletoDTO.parse(tr.verTrainerEmail(email));
 		
 		if(trainer == null) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Entrenador no encontrado");
