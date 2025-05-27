@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fithub.auth.dto.AuthDTO;
 import com.fithub.auth.dto.LoginDTO;
 import com.fithub.auth.dto.RegistroDTO;
+import com.fithub.auth.response.LoginResponse;
 import com.fithub.auth.service.AuthService;
 
 @RestController
@@ -35,13 +36,8 @@ public class AuthRestController {
 	}
 	
 	@PostMapping("/login")
-	ResponseEntity<Map<String, String>> login(@RequestBody LoginDTO log) {
-		String token = as.login(log);
-		
-		Map<String, String> respuesta = new HashMap<>();
-		respuesta.put("token", token);
-		
-		return ResponseEntity.ok(respuesta);
+	ResponseEntity<LoginResponse> login(@RequestBody LoginDTO log) {
+		return ResponseEntity.ok(as.login(log));
 	}
 	
 	@GetMapping("/perfil")

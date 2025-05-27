@@ -1,7 +1,6 @@
 package com.fithub.auth.serviceImpl;
 
 
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -9,8 +8,11 @@ import com.fithub.auth.dto.AuthDTO;
 import com.fithub.auth.dto.LoginDTO;
 import com.fithub.auth.dto.RegistroDTO;
 import com.fithub.auth.entity.AuthEntity;
+import com.fithub.auth.entity.Role;
+import com.fithub.auth.exception.AuthException;
 import com.fithub.auth.jwt.JwtUtil;
 import com.fithub.auth.repository.AuthRepository;
+import com.fithub.auth.response.LoginResponse;
 import com.fithub.auth.service.AuthService;
 
 @Service
@@ -44,14 +46,24 @@ public class AuthServiceImpl implements AuthService {
 	}
 
 	@Override
-	public String login(LoginDTO log) {
+	public LoginResponse login(LoginDTO log) {
 		AuthEntity usuario = ar.findByEmail(log.getEmail());
-
-		if (usuario == null || !pe.matches(log.getContraseña(), usuario.getContraseña())) {
-			throw new BadCredentialsException("Credenciales inválidas.");
+		
+		if(usuario == null) {
+			throw new AuthException("Email incorrecto", 420);
 		}
 
-		return ju.generarToken(log.getEmail());
+		if(!pe.matches(log.getContraseña(), usuario.getContraseña())) {
+			throw new AuthException("Contraseña incorrecta", 421);
+		}
+		
+		String token = ju.generarToken(log.getEmail());
+		Role rol = usuario.getRol();
+
+		return LoginResponse.builder()
+				.token(token)
+				.rol(rol)
+				.build();
 	}
 
 	@Override
