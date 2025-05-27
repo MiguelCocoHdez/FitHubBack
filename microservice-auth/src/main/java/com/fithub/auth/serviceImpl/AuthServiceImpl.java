@@ -50,7 +50,7 @@ public class AuthServiceImpl implements AuthService {
 		AuthEntity usuario = ar.findByEmail(log.getEmail());
 		
 		if(usuario == null) {
-			throw new AuthException("Email incorrecto", 420);
+			throw new AuthException("El email proporcionado no existe", 420);
 		}
 
 		if(!pe.matches(log.getContraseña(), usuario.getContraseña())) {
