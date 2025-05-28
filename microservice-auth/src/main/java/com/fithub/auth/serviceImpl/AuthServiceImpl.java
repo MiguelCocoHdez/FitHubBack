@@ -31,11 +31,11 @@ public class AuthServiceImpl implements AuthService {
 	@Override
 	public String registro(RegistroDTO reg) {
 		if (ar.existsByEmail(reg.getEmail())) {
-			throw new RuntimeException("El email ya está en uso.");
+			throw new AuthException("El email ya está en uso.", 422);
 		}
 
 		if (ar.existsByNombreusuario(reg.getNombreusuario())) {
-			throw new RuntimeException("El nombre de usuario ya está en uso.");
+			throw new AuthException("El nombre de usuario ya está en uso.", 423);
 		}
 
 		AuthEntity nuevoUsuario = AuthEntity.parse(reg, pe.encode(reg.getContraseña()));

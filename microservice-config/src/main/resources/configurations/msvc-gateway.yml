@@ -33,6 +33,11 @@ spring:
           predicates:
             - Path=/fithub/trainer/**
 
+        - id: MSVC-CLIENT
+          uri: lb://MSVC-CLIENT
+          predicates:
+            - Path=/fithub/client/**
+
         - id: MSVC-PAYMENT
           uri: lb://MSVC-PAYMENT
           predicates:
