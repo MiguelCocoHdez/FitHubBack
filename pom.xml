@@ -24,6 +24,7 @@
 	<module>microservice-client</module>
 	<module>microservice-payment</module>
 	<module>microservice-gateway</module>
+	<module>microservice-connection</module>
   </modules>
 
   <properties>
