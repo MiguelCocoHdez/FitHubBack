@@ -25,6 +25,7 @@
 	<module>microservice-payment</module>
 	<module>microservice-gateway</module>
 	<module>microservice-connection</module>
+	<module>microservice-notification</module>
   </modules>
 
   <properties>
