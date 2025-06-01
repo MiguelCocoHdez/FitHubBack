@@ -3,13 +3,17 @@ package com.fithub.notification.serviceImpl;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.fithub.notification.client.NotificationClientClient;
 import com.fithub.notification.dto.ClienteCompletoDTO;
+import com.fithub.notification.dto.IdsTrainerClientDTO;
 import com.fithub.notification.dto.NotificationDTO;
 import com.fithub.notification.entity.NotificationEntity;
+import com.fithub.notification.rabbitmq.RabbitConfig;
 import com.fithub.notification.repository.NotificationRepository;
 import com.fithub.notification.response.VerNotificationsTrainerResponse;
 import com.fithub.notification.service.NotificationService;
@@ -22,6 +26,10 @@ public class NotificationServiceImpl implements NotificationService {
 	
 	@Autowired
 	NotificationClientClient ncc;
+	
+	@Autowired
+	@Qualifier("templateJson")
+	AmqpTemplate at;
 
 	@Override
 	public List<VerNotificationsTrainerResponse> verNotificacionesTrainer(Long trainerId) {
@@ -38,6 +46,7 @@ public class NotificationServiceImpl implements NotificationService {
 		
 		List<VerNotificationsTrainerResponse> listaFinal = new ArrayList<VerNotificationsTrainerResponse>();
 		
+		//Ver el cliente con el mensaje que puso en su solicitud
 		for(NotificationDTO n : notificaciones) {
 			for(ClienteCompletoDTO c : todosClientes) {
 				if(n.getClientId().equals(c.getId())) {
@@ -52,6 +61,15 @@ public class NotificationServiceImpl implements NotificationService {
 		}
 		
 		return listaFinal;
+	}
+
+	@Override
+	public void aceptarPeticion(Long idPeticion) {
+		nr.aceptarPeticion(idPeticion);
+		
+		NotificationDTO notificacion = NotificationDTO.parse(nr.getReferenceById(idPeticion));
+		
+		at.convertAndSend(RabbitConfig.EXCHANGE, RabbitConfig.ROUTING_KEY, new IdsTrainerClientDTO(notificacion.getClientId(), notificacion.getTrainerId()));
 	}
 
 }

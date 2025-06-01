@@ -10,4 +10,6 @@ public interface ClientService {
 	void crearClient(ClientDTO client, String email);
 	
 	List<ClienteCompletoDTO> verClientesTrainer(List<Long> ids);
+	
+	void agregarTrainer(Long clientId, Long trainerId);
 }

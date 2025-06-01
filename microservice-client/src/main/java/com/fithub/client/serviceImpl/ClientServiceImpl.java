@@ -40,4 +40,9 @@ public class ClientServiceImpl implements ClientService {
 		return clientes;
 	}
 
+	@Override
+	public void agregarTrainer(Long clientId, Long trainerId) {
+		cr.agregarTrainer(clientId, trainerId);
+	}
+
 }

@@ -23,4 +23,9 @@ public interface TrainerRepository extends JpaRepository<TrainerEntity, Long> {
 	@Transactional
 	@Query(value = "UPDATE trainers SET plan = 'PREMIUM' WHERE email = :email", nativeQuery = true)
 	void cambiarAPremiumTrainer(@Param("email") String email);
+	
+	@Modifying
+	@Transactional
+	@Query(value = "INSERT INTO trainer_entity_clientes_ids (trainer_entity_id, clientes_ids) VALUES (:trainerId, :clientId)", nativeQuery = true)
+	void agregarClient(@Param("trainerId") Long trainerId, @Param("clientId") Long clientId);
 }

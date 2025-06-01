@@ -16,4 +16,6 @@ public interface TrainerService {
 	TrainerCompletoDTO verTrainerEmail(String email);
 	
 	void cambiarAPremiumTrainer(String email);
+	
+	void agregarClient(Long trainerId, Long clientId);
 }

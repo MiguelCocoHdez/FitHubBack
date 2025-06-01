@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fithub.trainer.dto.TrainerCompletoDTO;
@@ -56,5 +57,10 @@ public class TrainerRestController {
 		String email = (String) auth.getPrincipal();
 		
 		ts.cambiarAPremiumTrainer(email);
+	}
+	
+	@PutMapping("/agregarClient")
+	void agregarClient(@RequestParam Long trainerId, @RequestParam Long clientId) {
+		ts.agregarClient(trainerId, clientId);
 	}
 }

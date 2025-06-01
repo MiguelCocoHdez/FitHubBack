@@ -85,4 +85,9 @@ public class TrainerServiceImpl implements TrainerService {
 		tr.cambiarAPremiumTrainer(email);
 	}
 
+	@Override
+	public void agregarClient(Long trainerId, Long clientId) {
+		tr.agregarClient(trainerId, clientId);
+	}
+
 }
