@@ -32,7 +32,7 @@ public class ClientRestController {
 		return ResponseEntity.ok("Cliente creado correctamente");
 	}
 	
-	//Endpoint usado en verTrainerId en el servicio trainers
+	//Endpoint usado en verTrainerId en el servicio trainers y notification service
 	@GetMapping("/verClientesTrainer")
 	List<ClienteCompletoDTO> verClientesTrainer(@RequestParam List<Long> ids) {
 		return cs.verClientesTrainer(ids);
