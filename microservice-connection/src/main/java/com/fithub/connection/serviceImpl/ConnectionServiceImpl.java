@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.fithub.connection.dto.RequestConectarTrainer;
-import com.fithub.connection.rabbitmq.RabbitConfig;
 import com.fithub.connection.service.ConnectionService;
 
 @Service
@@ -18,7 +17,7 @@ public class ConnectionServiceImpl implements ConnectionService {
 
 	@Override
 	public void solicitarConexion(RequestConectarTrainer request) {
-		at.convertAndSend(RabbitConfig.EXCHANGE, RabbitConfig.ROUTING_KEY, request);
+		at.convertAndSend("fithub.notification.exchange", "fithub.notification.solicitud", request);
 	}
 
 }

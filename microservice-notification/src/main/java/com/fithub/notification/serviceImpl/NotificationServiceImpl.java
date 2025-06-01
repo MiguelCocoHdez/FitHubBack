@@ -13,7 +13,6 @@ import com.fithub.notification.dto.ClienteCompletoDTO;
 import com.fithub.notification.dto.IdsTrainerClientDTO;
 import com.fithub.notification.dto.NotificationDTO;
 import com.fithub.notification.entity.NotificationEntity;
-import com.fithub.notification.rabbitmq.RabbitConfig;
 import com.fithub.notification.repository.NotificationRepository;
 import com.fithub.notification.response.VerNotificationsTrainerResponse;
 import com.fithub.notification.service.NotificationService;
@@ -69,7 +68,7 @@ public class NotificationServiceImpl implements NotificationService {
 		
 		NotificationDTO notificacion = NotificationDTO.parse(nr.getReferenceById(idPeticion));
 		
-		at.convertAndSend(RabbitConfig.EXCHANGE, RabbitConfig.ROUTING_KEY, new IdsTrainerClientDTO(notificacion.getClientId(), notificacion.getTrainerId()));
+		at.convertAndSend("fithub.connection.exchange", "fithub.connection.solicitud", new IdsTrainerClientDTO(notificacion.getClientId(), notificacion.getTrainerId()));
 	}
 
 }

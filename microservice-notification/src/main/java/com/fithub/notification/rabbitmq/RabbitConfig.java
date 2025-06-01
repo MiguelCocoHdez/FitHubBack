@@ -14,9 +14,9 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class RabbitConfig {
 
-	public static final String EXCHANGE = "fithub.connection.exchange";
-    public static final String QUEUE = "fithub.connection.queue";
-    public static final String ROUTING_KEY = "fithub.connection.solicitud";
+	public static final String EXCHANGE = "fithub.notification.exchange";
+    public static final String QUEUE = "fithub.notification.queue";
+    public static final String ROUTING_KEY = "fithub.notification.solicitud";
     
     @Bean
     Jackson2JsonMessageConverter convertirAJson() {
