@@ -1,6 +1,8 @@
 package com.fithub.trainer.service;
 
 
+import java.util.List;
+
 import com.fithub.trainer.dto.TrainerCompletoDTO;
 import com.fithub.trainer.dto.TrainerDTO;
 import com.fithub.trainer.response.VerTrainerIdResponse;
@@ -18,4 +20,6 @@ public interface TrainerService {
 	void cambiarAPremiumTrainer(String email);
 	
 	void agregarClient(Long trainerId, Long clientId);
+	
+	List<TrainerCompletoDTO> verTodosTrainers();
 }

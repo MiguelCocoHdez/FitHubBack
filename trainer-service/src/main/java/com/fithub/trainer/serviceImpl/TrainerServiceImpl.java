@@ -1,6 +1,7 @@
 package com.fithub.trainer.serviceImpl;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -88,6 +89,17 @@ public class TrainerServiceImpl implements TrainerService {
 	@Override
 	public void agregarClient(Long trainerId, Long clientId) {
 		tr.agregarClient(trainerId, clientId);
+	}
+
+	@Override
+	public List<TrainerCompletoDTO> verTodosTrainers() {
+		List<TrainerCompletoDTO> trainers = new ArrayList<TrainerCompletoDTO>();
+		
+		for(TrainerEntity t : tr.verTodosTrainers()) {
+			trainers.add(TrainerCompletoDTO.parse(t));
+		}
+		
+		return trainers;
 	}
 
 }

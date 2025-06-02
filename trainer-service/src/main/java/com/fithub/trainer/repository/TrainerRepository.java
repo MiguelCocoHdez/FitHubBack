@@ -1,5 +1,7 @@
 package com.fithub.trainer.repository;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -28,4 +30,7 @@ public interface TrainerRepository extends JpaRepository<TrainerEntity, Long> {
 	@Transactional
 	@Query(value = "INSERT INTO trainer_entity_clientes_ids (trainer_entity_id, clientes_ids) VALUES (:trainerId, :clientId)", nativeQuery = true)
 	void agregarClient(@Param("trainerId") Long trainerId, @Param("clientId") Long clientId);
+	
+	@Query(value = "SELECT * FROM trainers", nativeQuery = true)
+	List<TrainerEntity> verTodosTrainers();
 }

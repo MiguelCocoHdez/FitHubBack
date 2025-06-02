@@ -1,6 +1,8 @@
 package com.fithub.trainer.rest;
 
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -41,6 +43,11 @@ public class TrainerRestController {
 		ts.validarAccesoTrainer(email);
 		
 		return ts.verClientesTrainer(email);
+	}
+	
+	@GetMapping("/verTodosTrainers")
+	List<TrainerCompletoDTO> verTodosTrainers() {
+		return ts.verTodosTrainers();
 	}
 	
 	//ENDPOINT CONSUMIDO POR PAYMENT SERVICE
