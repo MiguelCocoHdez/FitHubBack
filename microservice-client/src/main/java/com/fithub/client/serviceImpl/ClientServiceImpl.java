@@ -45,4 +45,9 @@ public class ClientServiceImpl implements ClientService {
 		cr.agregarTrainer(clientId, trainerId);
 	}
 
+	@Override
+	public ClienteCompletoDTO verClient(String email) {
+		return ClienteCompletoDTO.parse(cr.verClient(email));
+	}
+
 }

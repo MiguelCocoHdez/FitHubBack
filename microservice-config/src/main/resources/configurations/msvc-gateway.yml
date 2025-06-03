@@ -42,3 +42,13 @@ spring:
           uri: lb://MSVC-PAYMENT
           predicates:
             - Path=/fithub/payment/**
+
+        - id: MSVC-CONNECTION
+          uri: lb://MSVC-CONNECTION
+          predicates:
+            - Path=/fithub/connection/**
+
+        - id: MSVC-NOTIFICATION
+          uri: lb://MSVC-NOTIFICATION
+          predicates:
+           - Path=/fithub/notification/**

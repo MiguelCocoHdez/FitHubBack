@@ -50,6 +50,7 @@ public class NotificationServiceImpl implements NotificationService {
 			for(ClienteCompletoDTO c : todosClientes) {
 				if(n.getClientId().equals(c.getId())) {
 					VerNotificationsTrainerResponse respuesta = VerNotificationsTrainerResponse.builder()
+						.id(n.getId())
 						.mensaje(n.getMensaje())
 						.cliente(c)
 						.build();

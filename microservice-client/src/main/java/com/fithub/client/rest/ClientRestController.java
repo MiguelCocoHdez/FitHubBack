@@ -33,6 +33,13 @@ public class ClientRestController {
 		return ResponseEntity.ok("Cliente creado correctamente");
 	}
 	
+	@GetMapping("/verClient")
+	ClienteCompletoDTO verClient(Authentication auth) {
+		String email = (String) auth.getPrincipal();
+		
+		return cs.verClient(email);
+	}
+	
 	//Endpoint usado en verTrainerId en el servicio trainers y notification service
 	@GetMapping("/verClientesTrainer")
 	List<ClienteCompletoDTO> verClientesTrainer(@RequestParam List<Long> ids) {

@@ -22,4 +22,7 @@ public interface ClientRepository extends JpaRepository<ClientEntity, Long> {
 	@Transactional
 	@Query(value = "UPDATE clientes SET trainerid = :trainerId WHERE id = :clientId", nativeQuery = true)
 	void agregarTrainer(@Param("clientId") Long clientId, @Param("trainerId") Long trainerId);
+	
+	@Query(value = "SELECT * FROM clientes WHERE email = :email", nativeQuery = true)
+	ClientEntity verClient(@Param("email") String email);
 }

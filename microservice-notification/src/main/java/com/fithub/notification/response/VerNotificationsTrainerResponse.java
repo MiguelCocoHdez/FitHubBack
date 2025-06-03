@@ -17,6 +17,7 @@ import lombok.Setter;
 @Builder
 public class VerNotificationsTrainerResponse {
 
+	private Long id;
 	private String mensaje;
 	private ClienteCompletoDTO cliente;
 }

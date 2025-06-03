@@ -30,7 +30,7 @@ public class SecurityConfig {
         http
         	.csrf(AbstractHttpConfigurer::disable)
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/register").authenticated()
+                .requestMatchers("/register", "/verClient").authenticated()
                 .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                 .anyRequest().permitAll()
             )

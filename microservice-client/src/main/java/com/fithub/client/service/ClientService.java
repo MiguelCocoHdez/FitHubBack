@@ -12,4 +12,6 @@ public interface ClientService {
 	List<ClienteCompletoDTO> verClientesTrainer(List<Long> ids);
 	
 	void agregarTrainer(Long clientId, Long trainerId);
+	
+	ClienteCompletoDTO verClient(String email);
 }
