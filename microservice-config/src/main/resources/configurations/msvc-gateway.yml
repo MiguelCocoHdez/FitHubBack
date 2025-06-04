@@ -5,6 +5,11 @@ logging:
   level:
     org.springframework.cloud.gateway: DEBUG
 
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+
 spring:
   application:
     name: msvc-gateway

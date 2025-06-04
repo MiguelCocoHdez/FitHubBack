@@ -1,0 +1,287 @@
+version: '3.9'
+
+services:
+##BASES DE DATOS
+  auth:
+    image: postgres
+    environment:
+      - POSTGRES_USER=fithub
+      - POSTGRES_PASSWORD=fithub
+      - POSTGRES_DB=fithub_auth
+    ports:
+      - "5432:5432"
+    networks:
+      - fithub
+    volumes:
+      - fithub_auth:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U fithub"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  client:
+    image: postgres
+    environment:
+      - POSTGRES_USER=fithub
+      - POSTGRES_PASSWORD=fithub
+      - POSTGRES_DB=fithub_client
+    ports:
+      - "5433:5432"
+    networks:
+      - fithub
+    volumes:
+      - fithub_client:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U fithub"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  notification:
+    image: postgres
+    environment:
+      - POSTGRES_USER=fithub
+      - POSTGRES_PASSWORD=fithub
+      - POSTGRES_DB=fithub_notification
+    ports:
+      - "5434:5432"
+    networks:
+      - fithub
+    volumes:
+      - fithub_notification:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U fithub"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  trainer:
+    image: postgres
+    environment:
+      - POSTGRES_USER=fithub
+      - POSTGRES_PASSWORD=fithub
+      - POSTGRES_DB=fithub_trainer
+    ports:
+      - "5436:5432"
+    networks:
+      - fithub
+    volumes:
+      - fithub_trainer:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U fithub"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  ##SERVICIOS
+  rabbitmq:
+    image: rabbitmq:latest
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    networks:
+      - fithub
+    environment:
+      - RABBITMQ_DEFAULT_USER=fithub
+      - RABBITMQ_DEFAULT_PASS=fithub
+
+
+  microservice-config:
+    build: ./microservice-config
+    ports:
+      - "8888:8888"
+    networks:
+      - fithub
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8888/actuator/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    environment:
+      - EUREKA_CLIENT_REGISTER_WITH_EUREKA=false
+      - EUREKA_CLIENT_FETCH_REGISTRY=false
+
+  microservice-eureka:
+    build: ./microservice-eureka
+    ports:
+      - "8761:8761"
+    networks:
+      - fithub
+    depends_on:
+      microservice-config:
+        condition: service_healthy
+    environment:
+      - SPRING_CONFIG_IMPORT=optional:configserver:http://microservice-config:8888
+      - SPRING_PROFILES_ACTIVE=docker
+      - EUREKA_CLIENT_REGISTER_WITH_EUREKA=false
+      - EUREKA_CLIENT_FETCH_REGISTRY=false
+      - LOGGING_LEVEL_ROOT=DEBUG
+    healthcheck:
+      test: ["CMD", "curl", "-f","http://localhost:8761/actuator/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  microservice-auth:
+    build: ./microservice-auth
+    ports:
+      - "8081:8081"
+    networks:
+      - fithub
+    depends_on:
+      microservice-config:
+        condition: service_healthy
+      microservice-eureka:
+        condition: service_healthy
+    environment:
+      - SPRING_CONFIG_IMPORT=optional:configserver:http://microservice-config:8888
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://microservice-eureka:8761/eureka/
+      - SPRING_PROFILES_ACTIVE=docker
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://auth:5432/fithub_auth
+      - SPRING_DATASOURCE_USERNAME=fithub
+      - SPRING_DATASOURCE_PASSWORD=fithub
+      - JWT_PASSWORD=un_secreto_muy_seguro_y_largo_de_32_caracteres_o_mas_1234567890
+      - JWT_EXPIRATION=86400000
+      - LOGGING_LEVEL_ROOT=DEBUG
+
+  microservice-client:
+    build: ./microservice-client
+    ports:
+      - "8083:8083"
+    networks:
+      - fithub
+    depends_on:
+      microservice-config:
+        condition: service_healthy
+      microservice-eureka:
+        condition: service_healthy
+    environment:
+      - SPRING_CONFIG_IMPORT=optional:configserver:http://microservice-config:8888
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://microservice-eureka:8761/eureka/
+      - SPRING_PROFILES_ACTIVE=docker
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://client:5432/fithub_client
+      - SPRING_DATASOURCE_USERNAME=fithub
+      - SPRING_DATASOURCE_PASSWORD=fithub
+      - JWT_PASSWORD=un_secreto_muy_seguro_y_largo_de_32_caracteres_o_mas_1234567890
+      - JWT_EXPIRATION=86400000
+      - LOGGING_LEVEL_ROOT=DEBUG
+
+  microservice-connection:
+    build: ./microservice-connection
+    ports:
+      - "8085:8085"
+    networks:
+      - fithub
+    depends_on:
+      microservice-config:
+        condition: service_healthy
+      microservice-eureka:
+        condition: service_healthy
+    environment:
+      - SPRING_CONFIG_IMPORT=optional:configserver:http://microservice-config:8888
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://microservice-eureka:8761/eureka/
+      - SPRING_PROFILES_ACTIVE=docker
+      - EUREKA_INSTANCE_HOSTNAME=MSVC-CONNECTION
+      - SPRING_RABBITMQ_HOST=rabbitmq
+      - SPRING_RABBITMQ_PORT=5672
+      - SPRING_RABBITMQ_USERNAME=fithub
+      - SPRING_RABBITMQ_PASSWORD=fithub
+      - LOGGING_LEVEL_ROOT=DEBUG
+
+  microservice-notification:
+    build: ./microservice-notification
+    ports:
+      - "8086:8086"
+    networks:
+      - fithub
+    depends_on:
+      microservice-config:
+        condition: service_healthy
+      microservice-eureka:
+        condition: service_healthy
+    environment:
+      - SPRING_CONFIG_IMPORT=optional:configserver:http://microservice-config:8888
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://microservice-eureka:8761/eureka/
+      - SPRING_PROFILES_ACTIVE=docker
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://notification:5432/fithub_notification
+      - SPRING_DATASOURCE_USERNAME=fithub
+      - SPRING_DATASOURCE_PASSWORD=fithub
+      - SPRING_RABBITMQ_HOST=rabbitmq
+      - SPRING_RABBITMQ_PORT=5672
+      - SPRING_RABBITMQ_USERNAME=fithub
+      - SPRING_RABBITMQ_PASSWORD=fithub
+      - JWT_PASSWORD=un_secreto_muy_seguro_y_largo_de_32_caracteres_o_mas_1234567890
+      - JWT_EXPIRATION=86400000
+      - LOGGING_LEVEL_ROOT=DEBUG
+  
+  microservice-payment:
+    build: ./microservice-payment
+    ports:
+      - "8084:8084"
+    networks:
+      - fithub
+    depends_on:
+      microservice-config:
+        condition: service_healthy
+      microservice-eureka:
+        condition: service_healthy
+    environment:
+      - SPRING_CONFIG_IMPORT=optional:configserver:http://microservice-config:8888
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://microservice-eureka:8761/eureka/
+      - SPRING_PROFILES_ACTIVE=docker
+      - JWT_PASSWORD=un_secreto_muy_seguro_y_largo_de_32_caracteres_o_mas_1234567890
+      - JWT_EXPIRATION=86400000
+      - SECRET_KEY=${SECRET_KEY}
+      - WEBHOOK_KEY=${WEBHOOK_KEY}
+      - LOGGING_LEVEL_ROOT=DEBUG
+
+  microservice-trainer:
+    build: ./trainer-service
+    ports:
+      - "8082:8082"
+    networks:
+      - fithub
+    depends_on:
+      microservice-config:
+        condition: service_healthy
+      microservice-eureka:
+        condition: service_healthy
+    environment:
+      - SPRING_CONFIG_IMPORT=optional:configserver:http://microservice-config:8888
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://microservice-eureka:8761/eureka/
+      - SPRING_PROFILES_ACTIVE=docker
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://trainer:5432/fithub_trainer
+      - SPRING_DATASOURCE_USERNAME=fithub
+      - SPRING_DATASOURCE_PASSWORD=fithub
+      - JWT_PASSWORD=un_secreto_muy_seguro_y_largo_de_32_caracteres_o_mas_1234567890
+      - JWT_EXPIRATION=86400000
+      - LOGGING_LEVEL_ROOT=DEBUG
+
+  microservice-gateway:
+    build: ./microservice-gateway
+    ports:
+      - "8080:8080"
+    networks:
+      - fithub
+    depends_on:
+      microservice-config:
+        condition: service_healthy
+      microservice-eureka:
+        condition: service_healthy
+    environment:
+      - SPRING_CONFIG_IMPORT=optional:configserver:http://microservice-config:8888
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://microservice-eureka:8761/eureka/
+      - SPRING_PROFILES_ACTIVE=docker
+
+
+networks:
+  fithub:
+    external: true
+    name: fithub_network
+
+volumes:
+  fithub_auth:
+  fithub_client:
+  fithub_notification:
+  fithub_trainer:
