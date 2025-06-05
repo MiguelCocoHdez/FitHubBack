@@ -21,6 +21,11 @@ public interface NotificationRepository extends JpaRepository<NotificationEntity
 	@Query(value = "UPDATE notifications SET estado = 'ACEPTADA' WHERE id = :id", nativeQuery = true)
 	void aceptarPeticion(@Param("id") Long id);
 	
-	@Query(value = "SELECT EXISTS ( SELECT 1 FROM notifications WHERE client_id = :clientId AND trainer_id = :trainerId)", nativeQuery = true)
+	@Query(value = "SELECT EXISTS ( SELECT 1 FROM notifications WHERE client_id = :clientId AND trainer_id = :trainerId AND estado = 'PENDIENTE')", nativeQuery = true)
 	Boolean notificacionRepetida(@Param("clientId") Long clientId, @Param("trainerId") Long trainerId);
+	
+	@Modifying
+	@Transactional
+	@Query(value = "UPDATE notifications SET estado = 'RECHAZADA' WHERE id = :id", nativeQuery = true)
+	void rechazarPeticion(@Param("id") Long id);
 }
