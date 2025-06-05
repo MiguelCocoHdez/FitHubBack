@@ -19,6 +19,11 @@ public class RabbitListener {
 	void recibirSolicitud(RequestConectarTrainer request) {
 		NotificationEntity notificacion = NotificationEntity.parse(request);
 		notificacion.setEstado(EstadoSolicitud.PENDIENTE);
+		Boolean notificacionExiste = nr.notificacionRepetida(notificacion.getClientId(), notificacion.getTrainerId());
+		
+		if(notificacionExiste) {
+			return;
+		}
 		
 		nr.save(notificacion);
 	}
