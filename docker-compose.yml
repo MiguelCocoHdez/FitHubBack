@@ -182,7 +182,6 @@ services:
       - SPRING_CONFIG_IMPORT=optional:configserver:http://microservice-config:8888
       - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://microservice-eureka:8761/eureka/
       - SPRING_PROFILES_ACTIVE=docker
-      - EUREKA_INSTANCE_HOSTNAME=MSVC-CONNECTION
       - SPRING_RABBITMQ_HOST=rabbitmq
       - SPRING_RABBITMQ_PORT=5672
       - SPRING_RABBITMQ_USERNAME=fithub
