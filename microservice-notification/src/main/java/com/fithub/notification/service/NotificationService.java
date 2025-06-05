@@ -9,4 +9,6 @@ public interface NotificationService {
 	List<VerNotificationsTrainerResponse> verNotificacionesTrainer(Long trainerId);
 	
 	void aceptarPeticion(Long idPeticion);
+	
+	void rechazarPeticion(Long idPeticion);
 }

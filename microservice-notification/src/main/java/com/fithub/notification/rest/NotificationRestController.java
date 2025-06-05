@@ -37,4 +37,14 @@ public class NotificationRestController {
 		
 		return ResponseEntity.ok(respuesta);
 	}
+	
+	@PutMapping("/rechazarPeticion")
+	ResponseEntity<Map<String, String>> rechazarPeticion(@RequestParam Long idPeticion, Authentication auth) {
+		Map<String, String> respuesta = new HashMap<>();
+		
+		ns.rechazarPeticion(idPeticion);
+		respuesta.put("Mensaje", "Peticion rechazada correctamente");
+		
+		return ResponseEntity.ok(respuesta);
+	}
 }

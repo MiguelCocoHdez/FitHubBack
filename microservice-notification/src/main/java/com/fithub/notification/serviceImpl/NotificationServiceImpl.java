@@ -72,4 +72,9 @@ public class NotificationServiceImpl implements NotificationService {
 		at.convertAndSend("fithub.connection.exchange", "fithub.connection.solicitud", new IdsTrainerClientDTO(notificacion.getClientId(), notificacion.getTrainerId()));
 	}
 
+	@Override
+	public void rechazarPeticion(Long idPeticion) {
+		nr.rechazarPeticion(idPeticion);
+	}
+
 }
