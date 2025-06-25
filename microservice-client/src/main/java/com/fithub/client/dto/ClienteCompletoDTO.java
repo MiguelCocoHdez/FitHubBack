@@ -26,6 +26,7 @@ public class ClienteCompletoDTO {
 	private String foto;
 	private LocalDate fechacreacion;
 	private String genero;
+	private Long trainerid;
 	
 	public static ClienteCompletoDTO parse(ClientEntity c) {
 		ClienteCompletoDTO dto = new ClienteCompletoDTO();
@@ -39,6 +40,7 @@ public class ClienteCompletoDTO {
 	    dto.setFoto(c.getFoto());
 	    dto.setFechacreacion(c.getFechacreacion());
 	    dto.setGenero(c.getGenero());
+	    dto.setTrainerid(c.getTrainerid());
 	    
 	    return dto;
 	}
