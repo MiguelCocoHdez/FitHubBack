@@ -17,7 +17,7 @@ public class ConnectionRestController {
 	@Autowired
 	ConnectionService cs;
 	
-	@PostMapping("")
+	@PostMapping("/solicitarTrainer")
 	ResponseEntity<String> crearSolicitud(@RequestBody RequestConectarTrainer request) {
 		cs.solicitarConexion(request);
 		
