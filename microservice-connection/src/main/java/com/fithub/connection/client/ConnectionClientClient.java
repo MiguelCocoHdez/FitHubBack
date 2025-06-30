@@ -4,7 +4,7 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-@FeignClient(name = "msvc-client")
+@FeignClient(name = "msvc-client", configuration = FeignClientConfig.class)
 public interface ConnectionClientClient {
 
 	@PutMapping("/fithub/client/agregarTrainer")
