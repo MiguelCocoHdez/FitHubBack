@@ -57,3 +57,8 @@ spring:
           uri: lb://MSVC-NOTIFICATION
           predicates:
            - Path=/fithub/notification/**
+
+        - id: MSVC-RUTINAS
+          uri: lb://MSVC-RUTINAS
+          predicates:
+           - Path=/fithub/rutinas/**
