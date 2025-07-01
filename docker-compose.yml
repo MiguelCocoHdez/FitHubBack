@@ -187,6 +187,8 @@ services:
       - SPRING_RABBITMQ_USERNAME=fithub
       - SPRING_RABBITMQ_PASSWORD=fithub
       - LOGGING_LEVEL_ROOT=DEBUG
+      - JWT_PASSWORD=un_secreto_muy_seguro_y_largo_de_32_caracteres_o_mas_1234567890
+      - JWT_EXPIRATION=86400000
 
   microservice-notification:
     build: ./microservice-notification
