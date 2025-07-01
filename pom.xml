@@ -27,6 +27,7 @@
 	<module>microservice-gateway</module>
 	<module>microservice-connection</module>
 	<module>microservice-notification</module>
+	<module>microservice-rutinas</module>
   </modules>
 
   <properties>
