@@ -73,6 +73,24 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+  
+  rutinas:
+    image: postgres
+    environment:
+      - POSTGRES_USER=fithub
+      - POSTGRES_PASSWORD=fithub
+      - POSTGRES_DB=fithub_rutinas
+    ports:
+      - "5435:5432"
+    networks:
+      - fithub
+    volumes:
+      - fithub_rutinas:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U fithub"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   ##SERVICIOS
   rabbitmq:
@@ -258,6 +276,28 @@ services:
       - JWT_PASSWORD=un_secreto_muy_seguro_y_largo_de_32_caracteres_o_mas_1234567890
       - JWT_EXPIRATION=86400000
       - LOGGING_LEVEL_ROOT=DEBUG
+  
+  microservice-rutinas:
+    build: ./microservice-rutinas
+    ports:
+      - "8087:8087"
+    networks:
+      - fithub
+    depends_on:
+      microservice-config:
+        condition: service_healthy
+      microservice-eureka:
+        condition: service_healthy
+    environment:
+      - SPRING_CONFIG_IMPORT=optional:configserver:http://microservice-config:8888
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://microservice-eureka:8761/eureka/
+      - SPRING_PROFILES_ACTIVE=docker
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://rutinas:5432/fithub_rutinas
+      - SPRING_DATASOURCE_USERNAME=fithub
+      - SPRING_DATASOURCE_PASSWORD=fithub
+      - JWT_PASSWORD=un_secreto_muy_seguro_y_largo_de_32_caracteres_o_mas_1234567890
+      - JWT_EXPIRATION=86400000
+      - LOGGING_LEVEL_ROOT=DEBUG
 
   microservice-gateway:
     build: ./microservice-gateway
@@ -286,3 +326,4 @@ volumes:
   fithub_client:
   fithub_notification:
   fithub_trainer:
+  fithub_rutinas:
