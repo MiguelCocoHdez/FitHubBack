@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.fithub.rutinas.dto.CrearRutinaDTO;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
@@ -13,6 +14,8 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -48,8 +51,8 @@ public class RutinaEntity {
 	@Column
 	private Long duracionMins;
 	
-	@ElementCollection
-	@Column
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinColumn(name = "rutina_id")
 	private List<EjercicioEntity> ejercicios;
 	
 	@Column
@@ -60,6 +63,10 @@ public class RutinaEntity {
 	
 	@Column
 	private Long trainerId;
+	
+	@ElementCollection
+	@Column
+	private List<Long> clientId;
 	
 	public static RutinaEntity parse(CrearRutinaDTO r) {
 		RutinaEntity rN = new RutinaEntity();
