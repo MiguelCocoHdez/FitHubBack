@@ -3,7 +3,6 @@ package com.fithub.rutinas.dto;
 import java.util.List;
 
 import com.fithub.rutinas.entity.Categoria;
-import com.fithub.rutinas.entity.EjercicioEntity;
 import com.fithub.rutinas.entity.Nivel;
 
 import lombok.AllArgsConstructor;
@@ -24,6 +23,6 @@ public class CrearRutinaDTO {
 	private Nivel nivel;
 	private Categoria categoria;
 	private Long duracionMins;
-	private List<EjercicioEntity> ejercicios;
+	private List<CrearEjercicioDTO> ejercicios;
 	private Long trainerId;
 }

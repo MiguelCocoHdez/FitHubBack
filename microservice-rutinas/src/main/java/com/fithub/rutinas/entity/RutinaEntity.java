@@ -1,8 +1,10 @@
 package com.fithub.rutinas.entity;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
+import com.fithub.rutinas.dto.CrearEjercicioDTO;
 import com.fithub.rutinas.dto.CrearRutinaDTO;
 
 import jakarta.persistence.CascadeType;
@@ -76,8 +78,23 @@ public class RutinaEntity {
 		rN.setNivel(r.getNivel());
 		rN.setCategoria(r.getCategoria());
 		rN.setDuracionMins(r.getDuracionMins());
-		rN.setEjercicios(r.getEjercicios());
 		rN.setTrainerId(r.getTrainerId());
+		
+		List<EjercicioEntity> listaEjercicios = new ArrayList<>();
+		
+		for(CrearEjercicioDTO e : r.getEjercicios()) {
+			EjercicioEntity eE = new EjercicioEntity();
+			
+			eE.setNombre(e.getNombre());
+			eE.setDescripcion(e.getDescripcion());
+			eE.setSeries(e.getSeries());
+			eE.setRepeticionesMin(e.getRepeticionesMin());
+			eE.setRepecionesMax(e.getRepecionesMax());
+			
+			listaEjercicios.add(eE);
+		}
+		
+		rN.setEjercicios(listaEjercicios);
 		
 		return rN;
 	}

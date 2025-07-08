@@ -21,10 +21,9 @@ public class RutinaServiceImpl implements RutinaService {
 
 	@Override
 	public void crearRutina(CrearRutinaDTO rutina) {
-		RutinaEntity rutinaF = RutinaEntity.parse(rutina);
-		
+		RutinaEntity rutinaF = RutinaEntity.parse(rutina);		
 		rutinaF.setFechaCreacion(LocalDate.now());
-		
+			
 		rr.save(rutinaF);
 	}
 
