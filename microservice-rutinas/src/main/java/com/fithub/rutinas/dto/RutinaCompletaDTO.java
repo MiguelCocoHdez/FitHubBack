@@ -21,6 +21,7 @@ import lombok.Setter;
 
 public class RutinaCompletaDTO {
 
+	private Long id;
 	private String nombre;
 	private String descripcion;
 	private Nivel nivel;
@@ -34,6 +35,7 @@ public class RutinaCompletaDTO {
 	public static RutinaCompletaDTO parse(RutinaEntity r) {
 		RutinaCompletaDTO rN = new RutinaCompletaDTO();
 		
+		rN.setId(r.getId());
 		rN.setNombre(r.getNombre());
 		rN.setDescripcion(r.getDescripcion());
 		rN.setNivel(r.getNivel());
