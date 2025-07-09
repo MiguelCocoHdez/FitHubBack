@@ -38,4 +38,9 @@ public class RutinaServiceImpl implements RutinaService {
 		return rutinasTrainer;
 	}
 
+	@Override
+	public void eliminarRutina(Long id) {
+		rr.deleteById(id);
+	}
+
 }

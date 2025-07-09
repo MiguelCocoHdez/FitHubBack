@@ -10,4 +10,6 @@ public interface RutinaService {
 	void crearRutina(CrearRutinaDTO rutina);
 	
 	List<RutinaCompletaDTO> verRutinasTrainer(Long trainerId);
+	
+	void eliminarRutina(Long id);
 }

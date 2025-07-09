@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -41,5 +42,15 @@ public class RutinaRestController {
 	@GetMapping("/verRutinasTrainer")
 	List<RutinaCompletaDTO> verRutinasTrainer(@RequestParam Long trainerId) {
 		return rs.verRutinasTrainer(trainerId);
+	}
+	
+	@DeleteMapping("/eliminarRutina")
+	ResponseEntity<Map<String, String>> eliminarRutina(@RequestParam Long id) {
+		Map<String, String> respuesta = new HashMap<>();
+		
+		rs.eliminarRutina(id);
+		respuesta.put("mensaje", "Rutina eliminada correctamente");
+		
+		return ResponseEntity.ok(respuesta);
 	}
 }
