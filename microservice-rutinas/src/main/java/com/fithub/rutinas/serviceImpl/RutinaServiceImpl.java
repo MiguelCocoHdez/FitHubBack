@@ -43,4 +43,9 @@ public class RutinaServiceImpl implements RutinaService {
 		rr.deleteById(id);
 	}
 
+	@Override
+	public void asignarRutina(Long clientId, Long id) {
+		rr.asignarRutina(clientId, id);
+	}
+
 }

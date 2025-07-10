@@ -12,4 +12,6 @@ public interface RutinaService {
 	List<RutinaCompletaDTO> verRutinasTrainer(Long trainerId);
 	
 	void eliminarRutina(Long id);
+	
+	void asignarRutina(Long clientId, Long id);
 }
