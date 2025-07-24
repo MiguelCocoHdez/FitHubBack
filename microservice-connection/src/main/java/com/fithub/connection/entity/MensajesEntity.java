@@ -2,6 +2,8 @@ package com.fithub.connection.entity;
 
 import java.time.LocalDateTime;
 
+import com.fithub.connection.dto.MensajeDTO;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -41,4 +43,15 @@ public class MensajesEntity {
 	
 	@Column
 	private LocalDateTime horaEnviada;
+	
+	public static MensajesEntity parse(MensajeDTO m) {
+		MensajesEntity mN = new MensajesEntity();
+		
+		mN.setTrainerId(m.getTrainerId());
+		mN.setClientId(m.getClientId());
+		mN.setContenido(m.getContenido());
+		mN.setSenderId(m.getSenderId());
+		
+		return mN;
+	}
 }
