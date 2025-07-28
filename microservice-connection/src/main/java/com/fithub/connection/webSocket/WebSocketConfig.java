@@ -17,8 +17,9 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
 	@Override
 	public void configureMessageBroker(MessageBrokerRegistry registry) {
-		registry.enableSimpleBroker("/topic"); //Endpoint para mandar mensajes
+		registry.enableSimpleBroker("/topic", "/user"); //Endpoint para mandar mensajes
 		registry.setApplicationDestinationPrefixes("/app"); //Endpoint al que se conecta para recibir los mensajes
+		registry.setUserDestinationPrefix("/user"); //Permite rutas privadas
 	}
 
 	
