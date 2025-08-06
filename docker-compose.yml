@@ -91,6 +91,24 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+  
+  connection:
+    image: postgres
+    environment:
+      - POSTGRES_USER=fithub
+      - POSTGRES_PASSWORD=fithub
+      - POSTGRES_DB=fithub_connection
+    ports:
+      - "5437:5432"
+    networks:
+      - fithub
+    volumes:
+      - fithub_connection:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U fithub"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   ##SERVICIOS
   rabbitmq:
@@ -207,6 +225,9 @@ services:
       - LOGGING_LEVEL_ROOT=DEBUG
       - JWT_PASSWORD=un_secreto_muy_seguro_y_largo_de_32_caracteres_o_mas_1234567890
       - JWT_EXPIRATION=86400000
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://connection:5432/fithub_connection
+      - SPRING_DATASOURCE_USERNAME=fithub
+      - SPRING_DATASOURCE_PASSWORD=fithub
 
   microservice-notification:
     build: ./microservice-notification
@@ -327,3 +348,4 @@ volumes:
   fithub_notification:
   fithub_trainer:
   fithub_rutinas:
+  fithub_connection:
